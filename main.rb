@@ -2,8 +2,8 @@ require 'open-uri'
 require 'selenium-webdriver'
 require 'uri'
 
-def xpath_url_chapter(i)
-    return "//*[@id='post-148412']/div[2]/ul/li[#{i}]/span[1]/a"
+def xpath_url_chapter(id, i)
+    return "//*[@id='post-#{id}']/div[2]/ul/li[#{i}]/span[1]/a"
 end
 
 def xpath_image
@@ -75,10 +75,12 @@ driver = Selenium::WebDriver.for(:chrome, options: caps)
 
 driver.get manga_url
 
+id = parse_integer(driver.find_element(:xpath => '/html/head/link[9]').attribute('href'))
+
 links = []
 
 driver.find_elements(:class => 'lchx').each.with_index { |v, i|
-    element_chapter_url = driver.find_element(:xpath => xpath_url_chapter(i+=1))
+    element_chapter_url = driver.find_element(:xpath => xpath_url_chapter(id, i+=1))
 
     chapter_url = element_chapter_url.attribute('href')
     
