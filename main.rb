@@ -15,7 +15,7 @@ def in_range(v, s, e)
 end
 
 def parse_integer(s)
-    return s.delete('^0-9')
+    return s.delete('^0-9').to_i
 end
 
 def is_integer(s)
