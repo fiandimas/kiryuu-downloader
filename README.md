@@ -4,7 +4,7 @@ Kiryuu Downloader is tool for automated download manga/manhwa. This tool only wo
 
 ### Usage
 ```sh
-$ ruby main.rb {url} {start_chapter} {last_chapter} {folder_output}
+$ ruby main.rb {--url} {--start} {--end} {--output}
 ```
 
 ### Requirement
@@ -19,11 +19,11 @@ $ ruby main.rb {url} {start_chapter} {last_chapter} {folder_output}
 4. Example usage:
 ```sh
 $ cd kiryuu-downloader
-$ ruby main.rb https://kiryuu.co/manga/relife/ 1 222 D:\manga\ReLIFE
+$ ruby main.rb -h
+$ ruby main.rb --url=https://kiryuu.co/manga/relife/ --start=1 --end=222 --output=D:\manga\ReLIFE
 ```
 
 ### Todos
 * PDF output result every chapter
-* Update argv command
 ### License
 MIT
