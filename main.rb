@@ -27,13 +27,36 @@ def valid_kiryuu(s)
     return uri.host == 'kiryuu.co'
 end
 
-manga_url = ARGV[0]
-start_chapter = ARGV[1]
-last_chapter = ARGV[2]
+HELP = <<ENDHELP
+Usage:
+   ruby main.rb [-h] [-u] [-s] [-e] [-o]
+    -h, --help       Show this help.
+    --url        Manga url.
+    --start      Start chapter.
+    --end        End Chapter.
+    --output     The folder output.
+ENDHELP
+
+args = Hash[ARGV.join(' ').scan(/--?([^=\s]+)(?:=(\S+))?/)]
+
+ARGV.each do |arg|
+  case arg
+    when '-h','--help'      then args["help"]      = true
+  end
+end
+
+if args["help"]
+    puts HELP
+    return
+end
+
+manga_url = args["url"]
+start_chapter = args["start"]
+last_chapter = args["end"]
 dest = Dir.pwd
 
 if manga_url.nil? || start_chapter.nil? || last_chapter.nil?
-    raise 'required arg is missing'
+    raise 'required arg is missing. use -h or --help command to see args'
 end
 
 if valid_kiryuu(manga_url) == false
@@ -48,12 +71,12 @@ if parse_integer(start_chapter) > parse_integer(last_chapter)
     raise 'invalid chapter. start chapter must be lower than last chapter'
 end
 
-if ARGV[3].nil? == false
+if args["output"].nil? == false
+    dest = args["output"]
+
     if File.exists?(dest) == false
         raise 'destination path must be valid path. or leave it empty'
     end
-
-    dest = ARGV[3]
 end
 
 options = {
